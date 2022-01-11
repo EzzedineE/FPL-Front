@@ -1,0 +1,68 @@
+<section>
+  <div>
+    <h1 class="text-center">{{ categorie?.nomcategorie }}</h1>
+
+    <form
+      class="mt-5"
+      [formGroup]="formlivre"
+      (ngSubmit)="add()"
+      *ngIf="User.role == 'admin'"
+    >
+      <div>
+        <label class="text-white">Titre:</label><br />
+        <input
+          type="text"
+          placeholder="Titre"
+          class="form-control"
+          formControlName="titre"
+        />
+      </div>
+      <div>
+        <label class="text-white">Auteur:</label><br />
+        <input
+          type="text"
+          placeholder="Auteur"
+          class="form-control"
+          formControlName="auteur"
+        />
+      </div>
+      <div>
+        <label class="text-white">Description:</label><br />
+        <input
+          type="text"
+          placeholder="Description"
+          class="form-control"
+          formControlName="description"
+        />
+      </div>
+      <div>
+        <input
+          accept="application/pdf"
+          type="file"
+          placeholder="Contenue"
+          class="form-control"
+          (change)="onFileChanged($event)"
+        />
+      </div>
+      <button class="btn btn-outline-warning w-100 mt-2">Ajouter</button>
+    </form>
+  </div>
+</section>
+<div *ngFor="let liv of categorie?.listeDesLivres" class="border container">
+  <h1>Titre: {{ liv.titre }}</h1>
+  <h3>Auteur: {{ liv.auteur }}</h3>
+  <p>Description: {{ liv.description }}</p>
+  <a
+    (click)="downloadfile(liv)"
+    class="btn btn-success"
+    *ngIf="User.type == 'abonne'"
+    >Telecharger</a
+  >
+</div>
+<div *ngIf="User.role == 'admin'">
+  <div *ngFor="let user of users">
+    <div>nom : {{ user.nom }}</div>
+    <div>Prenom : {{ user.prenom }}</div>
+    <div>Nombre de temechargement : {{ user.downloadListe?.length }}</div>
+  </div>
+</div>
